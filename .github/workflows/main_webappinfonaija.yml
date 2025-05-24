@@ -1,8 +1,9 @@
+
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 # More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
-name: Build and deploy Python app to Azure Web App - sample-app-github-cd
+name: Build and deploy Python app to Azure Web App - webappinfonaija
 
 on:
   push:
@@ -13,14 +14,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read #This is required for actions/checkout
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Python version
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.13'
 
       - name: Create and start virtual environment
         run: |
@@ -51,6 +54,7 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write #This is required for requesting the JWT
+      contents: read #This is required for actions/checkout
 
     steps:
       - name: Download artifact from build job
@@ -63,16 +67,16 @@ jobs:
 
       
       - name: Login to Azure
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_70EAEB01E7344A70ADC936904D8668C0 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_DE1C873329344453B852433BF700723B }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_07FF4A7ACD624D90ADE700FA7786CF46 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_18447CF8159C44E79E074130914B3A34 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A96EE03EB7974086BA77F97C4C1F3FB6 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_9597B4FDC12549EABCC2FF1CC3737CAC }}
 
       - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'sample-app-github-cd'
+          app-name: 'webappinfonaija'
           slot-name: 'Production'
           
